@@ -3,15 +3,16 @@
 set -e
 
 cert=$PWD/src/setup/osgeo4w/OSGeo_DigiCert_Signing_Cert
-: ${mirror:=https://download.osgeo.org/osgeo4w/v2}
+# : ${mirror:=https://download.osgeo.org/osgeo4w/v2}
+: ${mirror:=file:///C:/ProgramHub/OSGeo4W}
 
 sign=
 if [ -r "$cert.p12" -a -r "$cert.pass" ]; then
 	[ -z "$CI" ] || echo "::add-mask::$(<$cert.pass)"
 	sign="-signwith=$cert.p12 -signpass=$(<$cert.pass)"
 fi
-
-for i in ${PKGS:-qgis qgis-ltr}; do
+# TODO kestrel 遍历脚本参数，如果没有参数则默认使用 qgis-dev
+for i in "${@:-qgis-dev}"; do
 	o=
 	if [ -f "src/$i/qgis/CMakeLists.txt" -a src/$i/osgeo4w/qgis_msibanner.bmp -a src/$i/osgeo4w/qgis_msiinstaller.bmp -a src/$i/osgeo4w/qgis.ico ]; then
 		o="-releasename=$(sed -ne 's/^set(RELEASE_NAME "\(.*\)").*$/\1/ip' src/$i/qgis/CMakeLists.txt)"
@@ -34,6 +35,7 @@ for i in ${PKGS:-qgis qgis-ltr}; do
 		-verbose \
 		-shortname="$i" \
 		-mirror=$mirror \
+		-manufacturer=黄陵智慧水务地理信息服务 \
 		$i-full
 
 	[ -z "$CI" ] || echo "::endgroup::"

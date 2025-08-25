@@ -161,6 +161,9 @@ nextbinary
 	rm -f qgsversion.h
 	touch $SRCDIR/CMakeLists.txt
 
+	# TODO kesrel window 系统变量问题 fix bug 
+	# -D SETUPAPI_LIBRARY="$(cygpath -am "/cygdrive/d/Windows Kits/10/Lib/$UCRTVersion/um/x64/SetupAPI.Lib")" \
+	# -D SETUPAPI_LIBRARY="$(cygpath -am "$(cygpath -u "${WINDOWS_KITS_PATH}")/10/Lib/$UCRTVersion/um/x64/SetupAPI.Lib")" \
 	cmake -G Ninja \
 		-D CMAKE_CXX_COMPILER="$(cygpath -m $CXX)" \
 		-D CMAKE_C_COMPILER="$(cygpath -m $CC)" \
@@ -188,7 +191,7 @@ nextbinary
 		-D CMAKE_CONFIGURATION_TYPES="$BUILDCONF" \
 		-D HAS_KDE_QT5_SMALL_CAPS_FIX=TRUE \
 		-D HAS_KDE_QT5_FONT_STRETCH_FIX=TRUE \
-		-D SETUPAPI_LIBRARY="$(cygpath -am "/cygdrive/c/Program Files (x86)/Windows Kits/10/Lib/$UCRTVersion/um/x64/SetupAPI.Lib")" \
+		-D SETUPAPI_LIBRARY="$(cygpath -am "$(cygpath -u "${WINDOWS_KITS_PATH}")/10/Lib/$UCRTVersion/um/x64/SetupAPI.Lib")" \
 		-D PROJ_INCLUDE_DIR=$(cygpath -am $O4W_ROOT/include) \
 		-D POSTGRES_INCLUDE_DIR=$(cygpath -am $O4W_ROOT/include) \
 		-D GEOS_LIBRARY=$(cygpath -am "$O4W_ROOT/lib/geos_c.lib") \
@@ -218,7 +221,15 @@ nextbinary
 	mkdir -p $BUILDDIR/apps/$P/pdb
 
 	echo ALL_BUILD: $(date)
-	cmake --build $(cygpath -am $BUILDDIR) --target ${TARGET}Build --config $BUILDCONF
+
+	# TODO kesrel window 系统变量问题 fix bug 
+	# cmake --build $(cygpath -am $BUILDDIR) --target ${TARGET}Build --config $BUILDCONF
+	if [ "$PUSH_TO_DASH" = "TRUE" ]; then
+		cmake --build $(cygpath -am $BUILDDIR) --target ${TARGET}Build --config $BUILDCONF
+	else
+		cmake --build $(cygpath -am $BUILDDIR) --target all --config $BUILDCONF
+	fi
+	
 	tag=$(head -1 $BUILDDIR/Testing/TAG | sed -e "s/\r//")
 	if grep -q "<Error>" $BUILDDIR/Testing/$tag/Build.xml; then
 		sed -e '/src\\/ s#\\#/#g' $BUILDDIR/Testing/Temporary/LastBuild_$tag.log
@@ -283,7 +294,9 @@ nextbinary
 		sed -e "s/@package@/$P/g" -e "s/@version@/$v/g" -e "s/@grassversion@/$GRASS_VERSION/g" -e "s/@grasspath@/$(basename $GRASS_PREFIX)/g" -e "s/@grassmajor@/${GRASS_VERSION%%.*}/" qgis.bat         >install/bin/$P.bat
 		sed -e "s/@package@/$P/g" -e "s/@version@/$v/g" -e "s/@grassversion@/$GRASS_VERSION/g" -e "s/@grasspath@/$(basename $GRASS_PREFIX)/g" -e "s/@grassmajor@/${GRASS_VERSION%%.*}/" process.bat      >install/bin/qgis_process-$P.bat
 
-		cp "/cygdrive/c/Program Files (x86)/Windows Kits/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} install/apps/$P
+		# TODO kesrel window 系统变量问题 fix bug 
+		# cp "/cygdrive/d/Windows Kits/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} install/apps/$P
+		cp "$(cygpath -u "${WINDOWS_KITS_PATH}")/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} ./tmp
 
 		mkdir -p install/apps/$P/python
 		cp "$PYTHONHOME/Lib/site-packages/PyQt5/uic/widget-plugins/qgis_customwidgets.py" install/apps/$P/python

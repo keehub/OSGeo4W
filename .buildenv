@@ -1,0 +1,42 @@
+##### 脚本变量 ##### scripts\build.sh
+##### 脚本变量 ##### scripts\build.sh
+##### 脚本变量 ##### scripts\build.sh
+export PROGRAMFILES="D:\Program Files"
+export WINDOWS_KITS_PATH="D:/Windows Kits"
+# 控制是否跳过上传步骤。（1跳过上传，0执行上传操作）
+export OSGEO4W_SKIP_UPLOAD=1
+# 控制是否跳过清理步骤。(1跳过清理，0执行源码构建目录清理)
+export OSGEO4W_SKIP_CLEAN=0
+# 控制是否构建反向依赖，依赖当前包的其他包。（1构建反向依赖，0仅构建指定的包）
+export OSGEO4W_BUILD_RDEPS=0
+# 控制构建失败时是否继续后续包的构建。(0失败即停止，1继续构建其他包)
+export OSGEO4W_CONTINUE_BUILD=0
+# 控制是否跳过从主仓库下载依赖。(0从主仓库下载依赖，1不会从主仓库下载依赖)
+export OSGEO4W_SKIP_MASTER_REPO=0
+##### 脚本变量 ##### scripts\build.sh
+##### 脚本变量 ##### scripts\build.sh
+##### 脚本变量 ##### scripts\build.sh
+
+
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+# 跳过源码清理步骤（git clean、git reset 等），用于保留本地修改
+export OSGEO4W_SKIP_CLEAN=1
+# 跳过测试步骤，仅执行构建和打包
+export OSGEO4W_SKIP_TESTS=1
+# 强制重新构建，即使当前 commit 已构建过（覆盖版本检查逻辑）
+export OSGEO4W_FORCE_REBUILD=1
+# 控制是否将构建 / 测试结果提交到 CDash 平台
+export PUSH_TO_DASH=FALSE
+# 跳过安装步骤，不生成安装目录和安装包	
+# export OSGEO4W_SKIP_INSTALL=1
+# 源码目录路径，指向 QGIS 源码所在位置
+# export SRCDIR=1
+export REPO="https://github.com/keehub/QGIS.git"
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
+
+
+

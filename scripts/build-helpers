@@ -223,7 +223,8 @@ declare -x vs2019env
 fileversion() {
 	local ps="$(cygpath -a --sysdir)/WindowsPowerShell/v1.0/powershell.exe"
 	local v=$($ps -Command "(Get-Item \"$(cygpath -aw "$1")\").VersionInfo.ProductVersion")
-	v=${v%}
+	v=${v%
+}
 	echo $v
 }
 declare -x fileversion
@@ -266,7 +267,7 @@ vs2022env() {
 	fi
 
 	if [ -z "$OSGEO4W_SKIP_DBGHELP_CHECK" ]; then
-		local dhd="/cygdrive/c/Program Files (x86)/Windows Kits/10/Debuggers/x64/dbghelp.dll"
+		local dhd="/cygdrive/d/Windows Kits/10/Debuggers/x64/dbghelp.dll"
 
 		# make sure we have a dbghelp version, that works on Windows 8 using brute force
 		if ! [ -f "$dhd" ]; then
