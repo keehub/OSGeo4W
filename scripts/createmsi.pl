@@ -22,6 +22,7 @@ use File::Copy;
 use File::Basename;
 use Cwd qw/abs_path/;
 use Encode qw(decode_utf8 encode);
+use POSIX qw(strftime);
 
 my $ug = Data::UUID->new;
 
@@ -998,7 +999,7 @@ print "Running light...\n" if $verbose;
 # ICE64: complains about the desktop and start menu folder
 # TODO kestrel WiX Toolset 的light.exe工具，设置中文语言等
 # my $cmd = "$run ./wix/light.exe -nologo -ext WixUIExtension -ext WixUtilExtension -loc lang.wxl -out $installer.msi -sice:ICE09 -sice:ICE32 -sice:ICE60 -sice:ICE61 -sice:ICE64 -b ../unpacked " . join(" ", @wixobj);
-my $cmd = "$run ./wix/light.exe -v -ext WixUIExtension -ext WixUtilExtension -cultures:zh-CN -loc lang.wxl -out $installer.msi -sice:ICE09 -sice:ICE32 -sice:ICE60 -sice:ICE61 -sice:ICE64 -b ../unpacked " . join(" ", @wixobj);
+my $cmd = "$run ./wix/light.exe -v -ext WixUIExtension -ext WixUtilExtension -cultures:zh-CN -loc lang.wxl -out \"$installer.msi\" -sice:ICE09 -sice:ICE32 -sice:ICE60 -sice:ICE61 -sice:ICE64 -b ../unpacked " . join(" ", @wixobj);
 print "EXEC: $cmd\n" if $verbose;
 system $cmd;
 die "light failed" if $?;
