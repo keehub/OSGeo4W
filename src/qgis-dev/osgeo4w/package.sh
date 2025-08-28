@@ -296,7 +296,7 @@ nextbinary
 
 		# TODO kesrel window 系统变量问题 fix bug 
 		# cp "/cygdrive/d/Windows Kits/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} install/apps/$P
-		cp "$(cygpath -u "${WINDOWS_KITS_PATH}")/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} ./tmp
+		cp "$(cygpath -u "${WINDOWS_KITS_PATH}")/10/Debuggers/x64/"{dbghelp.dll,symsrv.dll} install/apps/$P
 
 		mkdir -p install/apps/$P/python
 		cp "$PYTHONHOME/Lib/site-packages/PyQt5/uic/widget-plugins/qgis_customwidgets.py" install/apps/$P/python

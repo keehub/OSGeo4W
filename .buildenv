@@ -2,7 +2,7 @@
 ##### 脚本变量 ##### scripts\build.sh
 ##### 脚本变量 ##### scripts\build.sh
 export PROGRAMFILES="D:\Program Files"
-export WINDOWS_KITS_PATH="D:/Windows Kits"
+export WINDOWS_KITS_PATH="D:\Windows Kits"
 # 控制是否跳过上传步骤。（1跳过上传，0执行上传操作）
 export OSGEO4W_SKIP_UPLOAD=1
 # 控制是否跳过清理步骤。(1跳过清理，0执行源码构建目录清理)
@@ -34,6 +34,8 @@ export PUSH_TO_DASH=FALSE
 # 源码目录路径，指向 QGIS 源码所在位置
 # export SRCDIR=1
 export REPO="https://github.com/keehub/QGIS.git"
+# QGIS源码目录
+export QGIS_SOURCE_DIR="C:\ProgramHub\QGIS"
 ##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
 ##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
 ##### 脚本变量 ##### src\qgis-dev\osgeo4w\package.sh
